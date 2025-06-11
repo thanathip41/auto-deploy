@@ -1,17 +1,17 @@
-name: Auto Deploy
+name: Auto Deploy on Release Commit
 
 on:
   push:
     branches:
-      - master  # changed from 'main' to 'master'
+      - master
 
 jobs:
   deploy:
     runs-on: self-hosted
+    if: startsWith(github.event.head_commit.message, 'release:')
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       - name: Stop old containers
         run: |
